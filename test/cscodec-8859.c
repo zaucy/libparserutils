@@ -30,13 +30,6 @@ typedef struct line_ctx {
 static bool handle_line(const char *data, size_t datalen, void *pw);
 static void run_test(line_ctx *ctx);
 
-static void *myrealloc(void *ptr, size_t len, void *pw)
-{
-	UNUSED(pw);
-
-	return realloc(ptr, len);
-}
-
 int main(int argc, char **argv)
 {
 	parserutils_charset_codec *codec;
@@ -48,7 +41,7 @@ int main(int argc, char **argv)
 	}
 
 	assert(parserutils_charset_codec_create("NATS-SEFI-ADD",
-			myrealloc, NULL, &codec) == PARSERUTILS_BADENCODING);
+			&codec) == PARSERUTILS_BADENCODING);
 
 	ctx.buflen = parse_filesize(argv[1]);
 	if (ctx.buflen == 0)
@@ -174,8 +167,7 @@ bool handle_line(const char *data, size_t datalen, void *pw)
 			enc_name[end - enc] = 0;
 
 			assert(parserutils_charset_codec_create(enc_name,
-					myrealloc, NULL, &ctx->codec) ==
-					PARSERUTILS_OK);
+					&ctx->codec) == PARSERUTILS_OK);
 
 			ctx->hadenc = true;
 

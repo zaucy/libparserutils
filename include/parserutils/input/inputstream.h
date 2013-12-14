@@ -48,7 +48,6 @@ typedef struct parserutils_inputstream
 /* Create an input stream */
 parserutils_error parserutils_inputstream_create(const char *enc,
 		uint32_t encsrc, parserutils_charset_detect_func csdetect,
-		parserutils_alloc alloc, void *pw, 
 		parserutils_inputstream **stream);
 /* Destroy an input stream */
 parserutils_error parserutils_inputstream_destroy(
