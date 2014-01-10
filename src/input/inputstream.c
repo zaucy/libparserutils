@@ -101,8 +101,13 @@ parserutils_error parserutils_inputstream_create(const char *enc,
 		s->mibenum = 
 			parserutils_charset_mibenum_from_name(enc, strlen(enc));
 
-		if (s->mibenum == 0)
+		if (s->mibenum == 0) {
+			parserutils__filter_destroy(s->input);
+			parserutils_buffer_destroy(s->public.utf8);
+			parserutils_buffer_destroy(s->raw);
+			free(s);
 			return PARSERUTILS_BADENCODING;
+		}
 
 		params.encoding.name = enc;
 
