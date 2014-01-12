@@ -441,7 +441,7 @@ parserutils_error charset_utf8_codec_read_char(charset_utf8_codec *c,
 		return error;
 	} else if (error == PARSERUTILS_NEEDDATA) {
 		/* Incomplete input sequence */
-		if (*sourcelen > INVAL_BUFSIZE)
+		if (*sourcelen >= INVAL_BUFSIZE)
 			abort();
 
 		memmove(c->inval_buf, *source, *sourcelen);
