@@ -89,8 +89,7 @@ parserutils_error parserutils__filter_create(const char *int_enc,
 	}
 
 #ifdef WITHOUT_ICONV_FILTER
-	error = parserutils_charset_codec_create(int_enc, alloc, pw, 
-			&f->write_codec);
+	error = parserutils_charset_codec_create(int_enc, &f->write_codec);
 	if (error != PARSERUTILS_OK) {
 		if (f->read_codec != NULL) {
 			parserutils_charset_codec_destroy(f->read_codec);
