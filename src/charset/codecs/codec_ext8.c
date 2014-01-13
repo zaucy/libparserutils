@@ -252,8 +252,7 @@ parserutils_error charset_ext8_codec_encode(parserutils_charset_codec *codec,
 				}
 
 				/* Insufficient output space */
-				if (towritelen >= WRITE_BUFSIZE)
-					abort();
+				assert(towritelen < WRITE_BUFSIZE);
 
 				c->write_len = towritelen;
 

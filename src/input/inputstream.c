@@ -412,8 +412,7 @@ parserutils_error parserutils_inputstream_refill_buffer(
 			stream->encsrc = 0;
 		}
 
-		if (stream->mibenum == 0)
-			abort();
+		assert(stream->mibenum != 0);
 
 		/* Strip any BOM, and update encoding as appropriate */
 		error = parserutils_inputstream_strip_bom(&stream->mibenum, 

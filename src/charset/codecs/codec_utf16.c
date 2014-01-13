@@ -5,6 +5,7 @@
  * Copyright 2007 John-Mark Bell <jmb@netsurf-browser.org>
  */
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -176,8 +177,7 @@ parserutils_error charset_utf16_codec_encode(parserutils_charset_codec *codec,
 		while (c->write_len > 0) {
 			error = parserutils_charset_utf16_from_ucs4(
 					pwrite[0], buf, &len);
-			if (error != PARSERUTILS_OK)
-				abort();
+			assert(error == PARSERUTILS_OK);
 
 			if (*destlen < len) {
 				/* Insufficient output buffer space */
@@ -210,13 +210,11 @@ parserutils_error charset_utf16_codec_encode(parserutils_charset_codec *codec,
 
 			error = parserutils_charset_utf16_from_ucs4(
 					towrite[0], buf, &len);
-			if (error != PARSERUTILS_OK)
-				abort();
+			assert(error == PARSERUTILS_OK);
 
 			if (*destlen < len) {
 				/* Insufficient output space */
-				if (towritelen >= WRITE_BUFSIZE)
-					abort();
+				assert(towritelen < WRITE_BUFSIZE);
 
 				c->write_len = towritelen;
 
@@ -245,6 +243,8 @@ parserutils_error charset_utf16_codec_encode(parserutils_charset_codec *codec,
 		*source += 4;
 		*sourcelen -= 4;
 	}
+
+	(void) error;
 
 	return PARSERUTILS_OK;
 }
@@ -350,8 +350,7 @@ parserutils_error charset_utf16_codec_decode(parserutils_charset_codec *codec,
 		/* Failed to resolve an incomplete character and
 		 * ran out of buffer space. No recovery strategy
 		 * possible, so explode everywhere. */
-		if ((orig_l + ol) - l == 0)
-			abort();
+		assert((orig_l + ol) - l != 0);
 
 		/* Report memory exhaustion case from above */
 		if (error != PARSERUTILS_OK)
@@ -449,8 +448,7 @@ parserutils_error charset_utf16_codec_read_char(charset_utf16_codec *c,
 		return error;
 	} else if (error == PARSERUTILS_NEEDDATA) {
 		/* Incomplete input sequence */
-		if (*sourcelen >= INVAL_BUFSIZE)
-			abort();
+		assert(*sourcelen < INVAL_BUFSIZE);
 
 		memmove(c->inval_buf, *source, *sourcelen);
 		c->inval_buf[*sourcelen] = '\0';
@@ -482,8 +480,7 @@ parserutils_error charset_utf16_codec_read_char(charset_utf16_codec *c,
 		if (error != PARSERUTILS_OK) {
 			if (error == PARSERUTILS_NEEDDATA) {
 				/* Need more data to be sure */
-				if (*sourcelen > INVAL_BUFSIZE)
-					abort();
+				assert(*sourcelen < INVAL_BUFSIZE);
 
 				memmove(c->inval_buf, *source, *sourcelen);
 				c->inval_buf[*sourcelen] = '\0';

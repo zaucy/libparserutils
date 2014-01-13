@@ -139,9 +139,6 @@ static inline parserutils_error parserutils_inputstream_peek(
 
 #undef IS_ASCII
 
-	if (off != utf8_len && error != PARSERUTILS_NEEDDATA)
-		abort();
-
 	return parserutils_inputstream_peek_slow(stream, offset, ptr, length);
 }
 
@@ -163,7 +160,7 @@ static inline void parserutils_inputstream_advance(
 #endif
 
 	if (bytes > stream->utf8->length - stream->cursor)
-		abort();
+		bytes = stream->utf8->length - stream->cursor;
 
 	if (stream->cursor == stream->utf8->length)
 		return;
