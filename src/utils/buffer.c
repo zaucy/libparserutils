@@ -134,7 +134,7 @@ parserutils_error parserutils_buffer_discard(parserutils_buffer *buffer,
 		return PARSERUTILS_BADPARM;
 
 	memmove(buffer->data + offset, buffer->data + offset + len, 
-			buffer->length - len);
+			buffer->length - (len + offset));
 
 	buffer->length -= len;
 
