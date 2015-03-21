@@ -1,3 +1,9 @@
+#!/bin/make
+#
+# Makefile for parserutils
+#
+# Copyright 2009-1015 John-Mark Bell <jmb@netsurf-browser.org>
+
 # Component settings
 COMPONENT := parserutils
 COMPONENT_VERSION := 0.2.1
@@ -20,8 +26,9 @@ ifneq ($(BUILD),i586-pc-haiku)
   WARNFLAGS := $(WARNFLAGS) -Werror
 endif
 
-CFLAGS := -D_BSD_SOURCE -I$(CURDIR)/include/ \
-	-I$(CURDIR)/src $(WARNFLAGS) $(CFLAGS)
+CFLAGS := -D_BSD_SOURCE -D_DEFAULT_SOURCE \
+	-I$(CURDIR)/include/ -I$(CURDIR)/src \
+	$(WARNFLAGS) $(CFLAGS)
 ifneq ($(GCCVER),2)
   CFLAGS := $(CFLAGS) -std=c99
 else
