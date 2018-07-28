@@ -87,6 +87,7 @@ int main(int argc, char **argv)
 	run_test(&ctx);
 
 	free(ctx.buf);
+	free(ctx.exp);
 
 	parserutils_charset_codec_destroy(ctx.codec);
 
