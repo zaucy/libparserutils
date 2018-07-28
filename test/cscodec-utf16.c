@@ -117,7 +117,7 @@ bool handle_line(const char *data, size_t datalen, void *pw)
 			if (ctx->buf[ctx->bufused - 1] == '\n')
 				ctx->bufused -= 1;
 
-			if (ctx->exp[ctx->expused - 1] == '\n')
+			if (ctx->expused != 0 && ctx->exp[ctx->expused - 1] == '\n')
 				ctx->expused -= 1;
 
 			run_test(ctx);
