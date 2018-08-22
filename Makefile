@@ -6,7 +6,7 @@
 
 # Component settings
 COMPONENT := parserutils
-COMPONENT_VERSION := 0.2.3
+COMPONENT_VERSION := 0.2.4
 # Default to a static library
 COMPONENT_TYPE ?= lib-static
 
