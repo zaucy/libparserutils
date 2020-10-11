@@ -1,0 +1,13 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "parserutils",
+    visibility = ["//visibility:public"],
+    strip_include_prefix = "include",
+    includes = ["include", "src"],
+    hdrs = glob(["include/parserutils/**/*.h"]),
+    srcs = glob(["src/**/*.c", "src/**/*.h", "src/**/*.inc", "include/parserutils/**/*.h"]),
+    deps = [
+        "@libiconv//:libiconv",
+    ],
+)
